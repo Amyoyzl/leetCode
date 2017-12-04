@@ -1,20 +1,15 @@
-package Array;
+package Math;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
-public class Permutations {
+public class Permutations2 {
+	
+	int[] a;
+	StringBuffer r = new StringBuffer();
+	int count = 0;
 
-	int[] a; // 保存1-n的数组
-	StringBuffer r = new StringBuffer(); // 保存结果
-	int count = 0; // 结果数量
-
-	//初始化数组
-	public Permutations(int n) {  // n 为数组的个数
-		a = new int[n];
-		for (int i = 0; i < n; i++) {
-			a[i] = i + 1;
-		}
+	public Permutations2(int[] a) {
+		this.a = a;
 	}
 
 	public void backtrack(int k) {
@@ -24,10 +19,19 @@ public class Permutations {
 			return;
 		}
 		for (int i = k; i < a.length; i++) {
+			if(isSame(k,i)) 
+				continue;
 			swap(i, k);
 			backtrack(k + 1);
 			swap(i, k);
 		}
+	}
+
+	private boolean isSame(int k, int i) {
+		for(int j = k; j < i; j++)
+			if(a[i]==a[j])
+				return true;
+		return false;
 	}
 
 	private void swap(int i, int j) {
@@ -37,12 +41,10 @@ public class Permutations {
 	}
 
 	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
-		int n = in.nextInt();
-		Permutations p = new Permutations(n);
+		int[] a = {1,2,2,1};
+		Permutations2 p = new Permutations2(a);
 		p.backtrack(0);
 		System.out.println(p.r);
 		System.out.println(p.count);
-		in.close();
 	}
 }
